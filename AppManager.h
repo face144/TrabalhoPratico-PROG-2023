@@ -1,0 +1,9 @@
+#ifndef TRABALHOPRATICO_APPMANAGER_H
+#define TRABALHOPRATICO_APPMANAGER_H
+
+typedef struct FAppManager
+{
+
+} FAppManager;
+
+#endif //TRABALHOPRATICO_APPMANAGER_H

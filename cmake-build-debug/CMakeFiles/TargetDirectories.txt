@@ -1,0 +1,3 @@
+C:/Users/jedua/Documents/ISEC-EI/PROG/TrabalhoPratico/cmake-build-debug/CMakeFiles/TrabalhoPratico.dir
+C:/Users/jedua/Documents/ISEC-EI/PROG/TrabalhoPratico/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/jedua/Documents/ISEC-EI/PROG/TrabalhoPratico/cmake-build-debug/CMakeFiles/rebuild_cache.dir
