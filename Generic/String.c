@@ -1,7 +1,6 @@
 #include <malloc.h>
 
 #include <string.h>
-#include <time.h>
 #include "String.h"
 
 int FStringCreate(FString *self, const char *InCharArray)
@@ -43,7 +42,7 @@ int FStringEdit(FString *self, char *InCharArray)
         return 1;
     }
 
-    free(self->String);
+    FStringDestroy(self);
     self->Length = 0;
 
     return FStringCreate(self, InCharArray);
@@ -109,4 +108,57 @@ FString FStringGenerateRandom(const int Length)
     FString Result;
     FStringCreate(&Result, Code);
     return Result;
+}
+
+int FStringAppend(FString *self, const char *InCharArray)
+{
+    unsigned Size = strlen(InCharArray) + self->Length + 1;
+    char NewString[Size];
+
+    unsigned Index = 0;
+    for (unsigned i = 0; i < self->Length; ++i)
+    {
+        NewString[Index++] = self->String[i];
+    }
+    for (unsigned i = 0; i < strlen(InCharArray); ++i)
+    {
+        NewString[Index++] = InCharArray[i];
+    }
+    NewString[Size - 1] = '\0';
+
+    FStringDestroy(self);
+    return FStringCreate(self, NewString);
+}
+
+int FStringContainsExtension(FString *self, const char *ExtensionToCheck) {
+    unsigned ExtensionLength = strlen(ExtensionToCheck);
+
+    for (int i = (int) self->Length - 1; i >= 0; --i) {
+        if (self->String[i] == '.')
+        {
+            unsigned StringIndex = i, ExtensionIndex = 0;
+            while (ExtensionIndex < ExtensionLength && StringIndex < self->Length)
+            {
+                char StringChar = self->String[StringIndex];
+                char ExtensionChar = ExtensionToCheck[ExtensionIndex];
+
+                if (StringChar != ExtensionChar)
+                {
+                    return 0;
+                }
+
+                ExtensionIndex++;
+                StringIndex++;
+            }
+
+            if (StringIndex == self->Length && ExtensionIndex == ExtensionLength)
+            {
+                return 1;
+            }
+
+            return 0;
+        }
+    }
+
+    return 0;
 }

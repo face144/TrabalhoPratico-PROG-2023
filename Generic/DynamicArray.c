@@ -29,8 +29,6 @@ int TDynamicArrayAddElement(TDynamicArray *self, void *Data)
         return 0;
     }
 
-    _assert
-
     void* NewLocation = realloc(self->Array, (self->Length + 1) * sizeof(Data));
     if (NewLocation == NULL)
     {
@@ -38,10 +36,10 @@ int TDynamicArrayAddElement(TDynamicArray *self, void *Data)
     }
 
     self->Array = NewLocation;
-    self->Length++;
+    memcpy(&self->Array[self->Length], Data, sizeof(Data));
 
-    memcpy(&self->Array[self->Length - 1], Data, sizeof(Data));
-    self->Array[self->Length] = NULL;
+    self->Array[self->Length + 1] = NULL;
+    self->Length++;
 
     return 1;
 }
@@ -80,7 +78,7 @@ void* TDynamicArrayGetElement(TDynamicArray *self, int Index)
         return NULL;
     }
 
-    return self->Array[Index];
+    return &self->Array[Index];
 }
 
 int TDynamicArraySerialize(TDynamicArray* self, FString* FileName)

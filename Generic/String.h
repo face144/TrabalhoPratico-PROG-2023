@@ -15,5 +15,7 @@ unsigned FStringGetLength(const FString* self);
 char* FStringGetCharArray(const FString* self);
 int FStringCompare(const FString* self, const FString* other);
 FString FStringGenerateRandom(const int Length);
+int FStringAppend(FString* self, const char* InCharArray);
+int FStringContainsExtension(FString* self, const char* ExtensionToCheck);
 
 #endif //TRABALHOPRATICO_STRING_H
