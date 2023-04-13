@@ -7,10 +7,11 @@ typedef struct TDynamicArray
 {
     void** Array;
     unsigned Length;
+    size_t ElementSize;
 
 } TDynamicArray;
 
-void TDynamicArrayCreate(TDynamicArray* self);
+void TDynamicArrayCreate(TDynamicArray* self, const size_t ElementSize);
 void TDynamicArrayDestroy(TDynamicArray *self);
 int TDynamicArrayAddElement(TDynamicArray *self, void *Data);
 int TDynamicArrayRemoveElement(TDynamicArray *self, int Index);

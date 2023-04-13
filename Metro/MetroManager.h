@@ -15,6 +15,8 @@ typedef struct FMetroManager
 FString FMetroManagerGenerateValidStationCode(FMetroManager* self);
 void FMetroManagerAddNewRoute(FMetroManager* self, FRoute NewRoute);
 FRoute* FMetroManagerGetRoute(FMetroManager* self, int Index);
+
+// Todo: Implement function below
 FRoute FMetroManagerCalculateRoute(FMetroManager* self, const FString* StationCode1, const FString* StationCode2);
 
 #endif //TRABALHOPRATICO_METROMANAGER_H

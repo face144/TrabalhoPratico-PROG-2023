@@ -1,11 +1,10 @@
 #include <malloc.h>
 #include <stdio.h>
 #include <memory.h>
-#include <assert.h>
 #include "DynamicArray.h"
 
 
-void TDynamicArrayCreate(TDynamicArray* self)
+void TDynamicArrayCreate(TDynamicArray* self, const size_t ElementSize)
 {
     if (self == NULL)
     {
@@ -15,6 +14,7 @@ void TDynamicArrayCreate(TDynamicArray* self)
     self->Length = 0;
     self->Array = malloc(sizeof(void*));
     self->Array = NULL;
+    self->ElementSize = ElementSize;
 }
 
 void TDynamicArrayDestroy(TDynamicArray *self)
@@ -29,7 +29,7 @@ int TDynamicArrayAddElement(TDynamicArray *self, void *Data)
         return 0;
     }
 
-    void* NewLocation = realloc(self->Array, (self->Length + 1) * sizeof(Data));
+    void* NewLocation = realloc(self->Array, (self->Length + 1) * self->ElementSize);
     if (NewLocation == NULL)
     {
         return 0;
@@ -89,10 +89,10 @@ int TDynamicArraySerialize(TDynamicArray* self, FString* FileName)
         return 0;
     }
 
-    fwrite(&self->Length, sizeof(unsigned), 1, File);
+    fwrite(&self->Length, sizeof(unsigned ), 1, File);
     for (unsigned i = 0; i < self->Length; i++)
     {
-        fwrite(&self->Array[i], sizeof(void*), 1, File);
+        fwrite(&self->Array[i], sizeof(self->ElementSize), 1, File);
     }
 
     fclose(File);
@@ -110,7 +110,7 @@ int TDynamicArrayDeserialize(TDynamicArray *self, FString *FileName)
     self->Array = calloc(self->Length, sizeof(void*));
 
     for (unsigned i = 0; i < self->Length; i++) {
-        fread(&self->Array[i], sizeof(void*), 1, File);
+        fread(&self->Array[i], sizeof(self->ElementSize), 1, File);
     }
 
     fclose(File);

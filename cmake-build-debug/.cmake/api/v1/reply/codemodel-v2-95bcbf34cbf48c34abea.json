@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/Github/TrabalhoPratico-PROG-2023/cmake-build-debug",
-		"source" : "D:/Github/TrabalhoPratico-PROG-2023"
+		"build" : "C:/Users/jedua/Documents/ISEC-EI/PROG/TrabalhoPratico/cmake-build-debug",
+		"source" : "C:/Users/jedua/Documents/ISEC-EI/PROG/TrabalhoPratico"
 	},
 	"version" : 
 	{

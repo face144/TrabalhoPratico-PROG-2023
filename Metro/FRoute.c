@@ -7,7 +7,7 @@ int AddStation(FRoute *self, FStation *NewStation)
         return 0;
     }
 
-    return TDynamicArrayAddElement(&self->StationList, NewStation);
+    return TDynamicArrayAddElement(&self->StationList, NewStation, sizeof(FStation));
 }
 
 int RemoveStation(FRoute *self, const FString *StationCode)

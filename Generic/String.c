@@ -91,7 +91,7 @@ int FStringCompare(const FString *self, const FString *other)
 
 FString FStringGenerateRandom(const int Length)
 {
-    char Code[Length];
+    char Code[Length + 1];
     for (int i = 0; i < Length; i++)
     {
         int RandNum = rand() % 36;
@@ -104,6 +104,7 @@ FString FStringGenerateRandom(const int Length)
             Code[i] = (char) ('0' + RandNum - 26);
         }
     }
+    Code[Length] = '\0';
 
     FString Result;
     FStringCreate(&Result, Code);
