@@ -50,6 +50,8 @@ int UpdateStationReferences(FRoute *self)
 
 int GetRouteFromTextFile(FRoute *self, const char *Filename)
 {
+    // Todo: Retornar erro se estacoes do ficheiro nao existem
+
     if (self == NULL || Filename == NULL)
     {
         return 0;

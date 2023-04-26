@@ -22,10 +22,11 @@ void PrintRoutes(FMetroManager* self);
 
 // Routes
 int AddRoute(FMetroManager* self, FRoute* NewRoute);
-int DeleteRoute(FMetroManager* self, int Index);
+int DeleteRoute(FMetroManager* self, char* RouteName);
 int UpdateRoutes(FMetroManager* self);
-// Todo:
 int AddStationToRoute(FMetroManager* self, char* StationCode, char* RouteName);
+int AddStationToRouteByReference(FStation* Station, FRoute* Route);
+int RemoveStationFromRoute(FMetroManager* self, char* StationCode, char* RouteName);
 
 // Stations
 FStation* AddStation(FMetroManager* self, char* StationName);
@@ -33,6 +34,7 @@ int DeleteStation(FMetroManager* self, char* StationCode);
 int SaveAllStations(FMetroManager* self, char* filename);
 int LoadStations(FMetroManager* self, char* filename);
 int GenerateValidStationCode(FMetroManager* self, char* OutCode);
+FStation* FindStation(FMetroManager* self, char* Code);
 
 // Todo: Implement function below
 FRoute FMetroManagerCalculateRoute(FMetroManager* self, const char* StationCode1, const char* StationCode2);

@@ -5,6 +5,7 @@
 
 #define DEFAULT_STATION_SAVE_PATH "Stations.bin"
 #define DEFAULT_ROUTE_SAVE_PATH "Routes.bin"
+#define FILENAME_MAXCHAR 32
 
 typedef struct FAppManager
 {
@@ -13,7 +14,8 @@ typedef struct FAppManager
 } FAppManager;
 
 int Init(FAppManager* App);
-void Loop(FAppManager* App);
+
+_Noreturn void Loop(FAppManager* App);
 
 void Menu(FAppManager* App);
 int AddStationMenu(FAppManager* App);
@@ -21,6 +23,7 @@ int RemoveStationMenu(FAppManager* App);
 
 int AddRouteMenu(FAppManager* App);
 int EditRouteMenu(FAppManager* App);
+int ImportRouteMenu(FAppManager* App);
 
 int SaveData(FAppManager* App);
 

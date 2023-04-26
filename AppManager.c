@@ -11,6 +11,7 @@ int Init(FAppManager* App)
     }
 
     srand(time(0));
+    fflush(stdout);
     App->MetroManager = FMetroManagerCreate();
 
     // Load from save files
@@ -24,6 +25,9 @@ int Init(FAppManager* App)
     {
         printf("Erro ao carregar informacao das rotas\n");
     }
+
+    // Update Routes
+    UpdateRoutes(&App->MetroManager);
 
     return 1;
 }
@@ -39,21 +43,20 @@ void Menu(FAppManager* App)
     printf("4 - Visualizar Rotas\n");
     printf("5 - Adicionar Rotas\n");
     printf("6 - Editar Rota\n");
-    printf("7 - Remover Rota\n");
-    printf("8 - Importar Rota\n");
+    printf("7 - Importar Rota\n");
 
-    printf("9 - Sair\n");
+    printf("8 - Sair\n");
 
 
     int OptionNum = 0;
     while (1)
     {
-        printf("\nInput: \n");
+        printf("\n-> ");
         char Option[16];
         scanf("%s", Option);
         OptionNum = atoi(Option);
 
-        if (OptionNum >= 1 && OptionNum <= 9)
+        if (OptionNum >= 1 && OptionNum <= 8)
             break;
 
         printf("Opcao invalida\n");
@@ -82,15 +85,14 @@ void Menu(FAppManager* App)
             break;
 
         case 6:
+            EditRouteMenu(App);
             break;
 
         case 7:
+            ImportRouteMenu(App);
             break;
 
         case 8:
-            break;
-
-        case 9:
             SaveData(App);
             exit(0);
 
@@ -102,7 +104,7 @@ void Menu(FAppManager* App)
     printf("\n");
 }
 
-void Loop(FAppManager* App)
+_Noreturn void Loop(FAppManager* App)
 {
     while(1)
     {
@@ -170,7 +172,125 @@ int AddRouteMenu(FAppManager *App)
 
 int EditRouteMenu(FAppManager *App)
 {
+    printf("--- Editar Rota ---\n\n");
+    printf("1 - Adicionar estacao\n");
+    printf("2 - Remover estacao (Aviso: Nao remove estacao do sistema)\n");
+    printf("3 - Apagar rota (Aviso: Nao remove estacoes do sistema)\n");
+    printf("\n");
 
+    int OptionNum = 0;
+    while (1)
+    {
+        printf("\n-> ");
+        char Option[16];
+        scanf("%s", Option);
+        OptionNum = atoi(Option);
+
+        if (OptionNum >= 1 && OptionNum <= 3)
+            break;
+
+        printf("Opcao invalida\n");
+    }
+
+    switch (OptionNum)
+    {
+        case 1:
+        {
+            char Route[ROUTE_MAXCHAR];
+            printf("Nome da rota: ");
+            fflush(stdin);
+            gets(Route);
+            printf("\n");
+
+            char StationCode[STATION_CODE_LENGTH];
+            printf("Codigo da estacao: ");
+            fflush(stdin);
+            gets(StationCode);
+            printf("\n");
+
+            if (AddStationToRoute(&App->MetroManager, StationCode, Route) == 0)
+            {
+                printf("Erro ao adicionar estacao. Por favor verifique o nome e o codigo\n");
+                return 0;
+            }
+
+            printf("Estacao com o codigo %s adicionada a rota %s\n", StationCode, Route);
+            return 1;
+        }
+        case 2:
+        {
+            char Route[ROUTE_MAXCHAR];
+            printf("Nome da rota: ");
+            fflush(stdin);
+            gets(Route);
+            printf("\n");
+
+            char StationCode[STATION_CODE_LENGTH];
+            printf("Codigo da estacao: ");
+            fflush(stdin);
+            gets(StationCode);
+            printf("\n");
+
+            if (RemoveStationFromRoute(&App->MetroManager, StationCode, Route) == 0)
+            {
+                printf("Erro ao remover estacao. Por favor verifique o nome e o codigo.\n");
+                return 0;
+            }
+
+            printf("Estacao com o codigo %s removida da rota %s.\n", StationCode, Route);
+            return 1;
+        }
+
+        case 3:
+        {
+            char Route[ROUTE_MAXCHAR];
+            printf("Nome da rota: ");
+            fflush(stdin);
+            gets(Route);
+            printf("\n");
+
+            if (DeleteRoute(&App->MetroManager, Route) == 0)
+            {
+                printf("Erro ao remover rota. Por favor verifique o nome.\n");
+                return 0;
+            }
+
+            printf("Rota com o nome %s removida.\n", Route);
+            return 1;
+
+        }
+
+        default:
+            break;
+    }
+
+    return 1;
+}
+
+int ImportRouteMenu(FAppManager *App)
+{
+    char Filename[FILENAME_MAXCHAR];
+    printf("Nome do ficheiro: ");
+    fflush(stdin);
+    gets(Filename);
+    printf("\n");
+
+    FRoute New = FRouteCreate();
+    if (GetRouteFromTextFile(&New, Filename) == 0)
+    {
+        printf("Erro ao importar rota do ficheiro\n");
+        return 0;
+    }
+
+    if (AddRoute(&App->MetroManager, &New))
+    {
+        printf("Erro ao adicionar rota\n");
+        return 0;
+    }
+
+
+    printf("Rota adicionada\n");
+    return 1;
 }
 
 int SaveData(FAppManager *App)
@@ -183,7 +303,7 @@ int SaveData(FAppManager *App)
         return 0;
     }
 
-    // Todo: Save das Routes
+    // Save das Routes
     if (TLinkedListSerialize(&App->MetroManager.RouteList, DEFAULT_ROUTE_SAVE_PATH) == 0)
     {
         printf("AVISO: Erro ao salvar rotas\n");

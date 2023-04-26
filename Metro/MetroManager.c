@@ -40,10 +40,10 @@ void PrintRoutes(FMetroManager *self)
 
         for (int j = 0; j < CurrentRoute->StationLength; ++j)
         {
-            FStation* CurrentStation = CurrentRoute->StationList[i];
+            FStation* CurrentStation = CurrentRoute->StationList[j];
             char* Name = CurrentStation->StationName;
             char* Code = CurrentStation->StationCode;
-            printf("Nome: %s | Codigo: %s\n", Name, Code);
+            printf("%d-> Nome: %s | Codigo: %s\n", j + 1, Name, Code);
         }
         printf("------------------\n");
     }
@@ -65,9 +65,24 @@ int AddRoute(FMetroManager* self, FRoute* NewRoute)
     return TLinkedListAddAtBack(&self->RouteList, NewRoute);
 }
 
-int DeleteRoute(FMetroManager* self, int Index)
+int DeleteRoute(FMetroManager* self, char* RouteName)
 {
-    return TLinkedListRemove(&self->RouteList, Index);
+    for (int i = 0; i < self->RouteList.Length; ++i)
+    {
+        FRoute* Current = TLinkedListGet(&self->RouteList, i);
+        if (strcmp(Current->RouteName, RouteName) == 0)
+        {
+            for (int j = 0; j < Current->StationLength; ++j)
+            {
+                strcpy(Current->StationList[j]->RouteName, "N/A");
+            }
+
+            TLinkedListRemove(&self->RouteList, i);
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 int UpdateRoutes(FMetroManager *self)
@@ -80,10 +95,12 @@ int UpdateRoutes(FMetroManager *self)
             FRoute* CurrentRoute = TLinkedListGet(&self->RouteList, j);
             if (strcmp(CurrentStation->RouteName, CurrentRoute->RouteName) == 0)
             {
-
+                AddStationToRouteByReference(CurrentStation, CurrentRoute);
             }
         }
     }
+
+    return 1;
 }
 
 FStation* AddStation(FMetroManager *self, char* StationName)
@@ -135,6 +152,92 @@ int LoadStations(FMetroManager* self, char* filename)
 
 int AddStationToRoute(FMetroManager *self, char *StationCode, char *RouteName)
 {
+    FStation* Station = NULL;
+    for (int i = 0; i < self->StationList.Length; ++i)
+    {
+        if (strcmp(self->StationList.Array[i].StationCode, StationCode) == 0)
+        {
+            Station = &self->StationList.Array[i];
+            break;
+        }
+    }
+
+    if (Station == NULL)
+    {
+        return 0;
+    }
+
+    unsigned Length = self->RouteList.Length;
+    if (Length >= ROUTE_MAX_STATIONS)
+    {
+        return 0;
+    }
+
+    TLinkedList* List = &self->RouteList;
+    for (int i = 0; i < Length; ++i)
+    {
+        FRoute* CurrentRoute = TLinkedListGet(List, i);
+        if (strcmp(CurrentRoute->RouteName, RouteName) == 0)
+        {
+            CurrentRoute->StationList[CurrentRoute->StationLength] = Station;
+            CurrentRoute->StationLength++;
+            strcpy(Station->RouteName, CurrentRoute->RouteName);
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int AddStationToRouteByReference(FStation *Station, FRoute *Route)
+{
+    if (Route->StationLength >= ROUTE_MAX_STATIONS)
+    {
+        return 0;
+    }
+
+    Route->StationList[Route->StationLength] = Station;
+    Route->StationLength++;
+    strcpy(Station->RouteName, Route->RouteName);
+    return 1;
+}
+
+int RemoveStationFromRoute(FMetroManager *self, char *StationCode, char *RouteName)
+{
+    unsigned Length = self->RouteList.Length;
+    TLinkedList* List = &self->RouteList;
+    FRoute* RouteReference = NULL;
+    for (int i = 0; i < Length; ++i)
+    {
+        FRoute* CurrentRoute = TLinkedListGet(List, i);
+        if (strcmp(CurrentRoute->RouteName, RouteName) == 0)
+        {
+            RouteReference = CurrentRoute;
+            break;
+        }
+    }
+
+    if (RouteReference == NULL)
+    {
+        return 0;
+    }
+
+    for (int i = 0; i < RouteReference->StationLength; ++i)
+    {
+        if (strcmp(RouteReference->StationList[i]->StationCode, StationCode) == 0)
+        {
+            for (int j = i; j < RouteReference->StationLength - 1; ++j)
+            {
+                RouteReference->StationList[i] = RouteReference->StationList[i + 1];
+            }
+
+            unsigned LastIndex = RouteReference->StationLength - 1;
+            strcpy(RouteReference->StationList[LastIndex]->RouteName, "N/A");
+            RouteReference->StationLength--;
+            return 1;
+        }
+    }
+
     return 0;
 }
 
@@ -170,4 +273,17 @@ int GenerateValidStationCode(FMetroManager *self, char* OutCode)
 
     strcpy(OutCode, Code);
     return 1;
+}
+
+FStation* FindStation(FMetroManager *self, char* Code)
+{
+    for (int i = 0; i < self->StationList.Length; ++i)
+    {
+        if (strcmp(self->StationList.Array[i].StationCode, Code) == 0)
+        {
+            return &self->StationList.Array[i];
+        }
+    }
+
+    return NULL;
 }

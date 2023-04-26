@@ -22,13 +22,14 @@ int TLinkedListAddAtFront(TLinkedList* self, FRoute* Data)
     {
         TLinkedListNode Node;
         Node.Next = NULL;
-        Node.Data = NULL;
+        // Node.Data = NULL;
         return 0;
     }
 
     TLinkedListNode* NewNode = malloc(sizeof(TLinkedListNode));
-    NewNode->Data = malloc(sizeof(FRoute));
-    memcpy(NewNode->Data, Data, sizeof(FRoute));
+    NewNode->Data = *Data;
+    // malloc(sizeof(FRoute*));
+    // memcpy(NewNode->Data, &Data, sizeof(FRoute));
     NewNode->Next = NULL;
 
     if (self->Head == NULL)
@@ -52,13 +53,14 @@ int TLinkedListAddAtBack(TLinkedList *self, FRoute *Data)
     {
         TLinkedListNode Node;
         Node.Next = NULL;
-        Node.Data = NULL;
+        // Node.Data = NULL;
         return 0;
     }
 
     TLinkedListNode* NewNode = malloc(sizeof(TLinkedListNode));
-    NewNode->Data = malloc(sizeof(FRoute));
-    memcpy(NewNode->Data, Data, sizeof(FRoute));
+    NewNode->Data = *Data;
+    // malloc(sizeof(FRoute));
+    // memcpy(NewNode->Data, &Data, sizeof(FRoute*));
     NewNode->Next = NULL;
 
     if (self->Head == NULL)
@@ -104,6 +106,7 @@ int TLinkedListRemove(TLinkedList* self, const int Index)
                 self->Tail = Previous;
             }
 
+            // free(Current->Data);
             free(Current);
             break;
         }
@@ -149,7 +152,7 @@ FRoute* TLinkedListGet(TLinkedList* self, int Index)
     {
         if (i == Index)
         {
-            return Current->Data;
+            return &Current->Data;
         }
 
         Current = Current->Next;
@@ -171,7 +174,7 @@ int TLinkedListSerialize(TLinkedList* self, char* FileName)
 
     for (TLinkedListNode* node = self->Head; node != NULL; node = node->Next)
     {
-        fwrite(node->Data, sizeof(FRoute), 1, File);
+        fwrite(&node->Data, sizeof(FRoute), 1, File);
     }
 
     fclose(File);
@@ -195,6 +198,7 @@ int TLinkedListDeserialize(TLinkedList* self, char* FileName)
         FRoute Data;
         fread(&Data, sizeof(FRoute), 1, File);
 
+        Data.StationLength = 0;
         TLinkedListAddAtBack(self, &Data);
     }
 

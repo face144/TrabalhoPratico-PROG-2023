@@ -5,7 +5,7 @@
 
 typedef struct TLinkedListNode
 {
-    FRoute* Data;
+    FRoute Data;
     struct TLinkedListNode* Next;
 
 } TLinkedListNode;
