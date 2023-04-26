@@ -26,7 +26,7 @@ int TLinkedListAddAtBack(TLinkedList* self, void* Data);
 int TLinkedListRemove(TLinkedList* self, const int Index);
 void TLinkedListDestroy(TLinkedList* self);
 void* TLinkedListGet(TLinkedList* self, int Index);
-int TLinkedListSerialize(TLinkedList* list, FString* FileName, size_t ElementSize);
-int TLinkedListDeserialize(TLinkedList* self, FString* FileName, size_t ElementSize);
+int TLinkedListSerialize(TLinkedList* list, char* FileName, size_t ElementSize);
+int TLinkedListDeserialize(TLinkedList* self, char* FileName, size_t ElementSize);
 
 #endif //TRABALHOPRATICO_LINKEDLIST_H

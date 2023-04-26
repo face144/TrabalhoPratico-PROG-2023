@@ -1,43 +1,29 @@
 #include "Station.h"
 
-void SetStationCode(FStation *self, const FString *StationCode)
+void SetStationCode(FStation *self, char *StationCode)
 {
     if (self == NULL)
     {
         return;
     }
 
-    self->StationName = *StationCode;
+    strcpy(self->StationCode, StationCode);
 }
 
-FString GetStationCode(const FStation *self)
-{
-    if (self == NULL) {
-        FString Result;
-        FStringCreate(&Result, "Invalid");
-        return Result;
-    }
-
-    return self->StationCode;
-}
-
-void SetStationName(FStation *self, const FString *StationName)
+void SetStationName(FStation *self, char *StationName)
 {
     if (self == NULL)
     {
         return;
     }
 
-    self->StationName = *StationName;
+    strcpy(self->StationName, StationName);
 }
 
-FString GetStationName(const FStation *self)
-{
-    if (self == NULL) {
-        FString Result;
-        FStringCreate(&Result, "Invalid");
-        return Result;
-    }
-
-    return self->StationName;
+FStation FStationCreate() {
+    FStation result;
+    strcpy(result.StationName, "StationName\0");
+    strcpy(result.StationCode, "StationCode\0");
+    strcpy(result.RouteName, "RouteName\0");
+    return result;
 }

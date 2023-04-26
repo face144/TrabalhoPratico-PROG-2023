@@ -82,24 +82,6 @@
 		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/AppManager.h">
 			<Option target="TrabalhoPratico"/>
 		</Unit>
-		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Generic/DynamicArray.c">
-			<Option target="TrabalhoPratico"/>
-		</Unit>
-		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Generic/DynamicArray.h">
-			<Option target="TrabalhoPratico"/>
-		</Unit>
-		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Generic/LinkedList.c">
-			<Option target="TrabalhoPratico"/>
-		</Unit>
-		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Generic/LinkedList.h">
-			<Option target="TrabalhoPratico"/>
-		</Unit>
-		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Generic/String.c">
-			<Option target="TrabalhoPratico"/>
-		</Unit>
-		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Generic/String.h">
-			<Option target="TrabalhoPratico"/>
-		</Unit>
 		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Metro/FRoute.c">
 			<Option target="TrabalhoPratico"/>
 		</Unit>
@@ -112,10 +94,22 @@
 		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Metro/MetroManager.h">
 			<Option target="TrabalhoPratico"/>
 		</Unit>
+		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Metro/RouteList.c">
+			<Option target="TrabalhoPratico"/>
+		</Unit>
+		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Metro/RouteList.h">
+			<Option target="TrabalhoPratico"/>
+		</Unit>
 		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Metro/Station.c">
 			<Option target="TrabalhoPratico"/>
 		</Unit>
 		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Metro/Station.h">
+			<Option target="TrabalhoPratico"/>
+		</Unit>
+		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Metro/StationList.c">
+			<Option target="TrabalhoPratico"/>
+		</Unit>
+		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/Metro/StationList.h">
 			<Option target="TrabalhoPratico"/>
 		</Unit>
 		<Unit filename="D:/Github/TrabalhoPratico-PROG-2023/main.c">

@@ -1,3 +1,4 @@
+/*
 #include <malloc.h>
 
 #include <string.h>
@@ -30,6 +31,34 @@ int FStringCreate(FString *self, const char *InCharArray)
     return 1;
 }
 
+FString FStringNew(const char *InCharArray)
+{
+    FString Result;
+
+    unsigned CharArraySize = 0;
+    for (int i = 0; InCharArray[i] != '\0' && InCharArray[i] != '\n'; ++i)
+    {
+        CharArraySize++;
+    }
+
+    Result.String = calloc(CharArraySize, sizeof (char));
+    if (Result.String == NULL)
+    {
+        Result.Length = -1;
+    }
+
+    for (int i = 0; i < CharArraySize; ++i)
+    {
+        Result.String[i] = InCharArray[i];
+    }
+
+    Result.String[CharArraySize] = '\0';
+    Result.Length = CharArraySize;
+
+    return Result;
+}
+
+
 int FStringEdit(FString *self, char *InCharArray)
 {
     if (self == NULL)
@@ -42,10 +71,30 @@ int FStringEdit(FString *self, char *InCharArray)
         return 1;
     }
 
-    FStringDestroy(self);
-    self->Length = 0;
+    unsigned Length = 0;
+    for (int i = 0; i < strlen(InCharArray); ++i)
+    {
+        if (InCharArray[i] == '\n' || InCharArray[i] == '\0')
+        {
+            Length = i + 1;
+            break;
+        }
+    }
 
-    return FStringCreate(self, InCharArray);
+    char* NewString = calloc(Length, sizeof(char));
+    if (self->Length > 0)
+    {
+        free(self->String);
+    }
+
+    for (int i = 0; i < strlen(InCharArray); ++i)
+    {
+        NewString[i] = InCharArray[i];
+    }
+
+    self->Length = strlen(InCharArray);
+    self->String = NewString;
+    self->String[Length] = '\0';
 }
 
 int FStringDestroy(FString *self)
@@ -55,8 +104,11 @@ int FStringDestroy(FString *self)
         return 0;
     }
 
-    free(self->String);
-    self->Length = 0;
+    if (self->Length > 0)
+    {
+        free(self->String);
+        self->Length = 0;
+    }
 }
 
 unsigned FStringGetLength(const FString *self)
@@ -121,6 +173,7 @@ int FStringAppend(FString *self, const char *InCharArray)
     {
         NewString[Index++] = self->String[i];
     }
+
     for (unsigned i = 0; i < strlen(InCharArray); ++i)
     {
         NewString[Index++] = InCharArray[i];
@@ -163,3 +216,39 @@ int FStringContainsExtension(FString *self, const char *ExtensionToCheck) {
 
     return 0;
 }
+
+int FStringSplit(FString *self, FString *other, char Token)
+{
+    // char FirstPart[self->Length];
+
+    for (int i = 0; i < self->Length; ++i)
+    {
+        // FirstPart[i] = self->String[i];
+
+        if (self->String[i] == Token)
+        {
+            if (i + 1 >= self->Length)
+            {
+                return 0;
+            }
+
+            // Terminate the first part with a null character
+            self->String[i] = '\0';
+            // Skip the token character
+            i++;
+
+            // FStringAppend(other, &self->String[i]);
+            other->String = &self->String[i];
+            other->Length = self->Length - i;
+
+            // FStringDestroy(self);
+            // FStringCreate(self, FirstPart);
+            self->Length = i - 1;
+
+            return 1;
+        }
+    }
+
+    return 0;
+}
+*/

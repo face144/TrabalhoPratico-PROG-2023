@@ -151,9 +151,9 @@ void* TLinkedListGet(TLinkedList* self, int Index)
     return NULL;
 }
 
-int TLinkedListSerialize(TLinkedList* self, FString* FileName, size_t ElementSize)
+int TLinkedListSerialize(TLinkedList* self, char* FileName, size_t ElementSize)
 {
-    FILE* File = fopen(FStringGetCharArray(FileName), "wb");
+    FILE* File = fopen(FileName, "wb");
     if (File == NULL)
     {
         return 0;
@@ -172,9 +172,9 @@ int TLinkedListSerialize(TLinkedList* self, FString* FileName, size_t ElementSiz
     return 1;
 }
 
-int TLinkedListDeserialize(TLinkedList* self, FString* FileName, size_t ElementSize)
+int TLinkedListDeserialize(TLinkedList* self, char* FileName, size_t ElementSize)
 {
-    FILE* File = fopen(FStringGetCharArray(FileName), "rb");
+    FILE* File = fopen(FileName, "rb");
     if (File == NULL)
     {
         return 0;

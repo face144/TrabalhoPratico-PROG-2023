@@ -1,12 +1,17 @@
-#include "stdio.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-#include "Generic/DynamicArray.h"
-#include "Generic/LinkedList.h"
-
+#include "AppManager.h"
 
 int main()
 {
+    setbuf(stdout, 0);
 
-
-    return 0;
+    FAppManager App;
+    if (Init(&App) == 1)
+    {
+        Loop(&App);
+        return 0;
+    }
+    return 1;
 }

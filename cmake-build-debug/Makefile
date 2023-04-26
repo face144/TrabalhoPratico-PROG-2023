@@ -152,78 +152,6 @@ AppManager.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/AppManager.c.s
 .PHONY : AppManager.c.s
 
-Generic/DynamicArray.obj: Generic/DynamicArray.c.obj
-.PHONY : Generic/DynamicArray.obj
-
-# target to build an object file
-Generic/DynamicArray.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Generic/DynamicArray.c.obj
-.PHONY : Generic/DynamicArray.c.obj
-
-Generic/DynamicArray.i: Generic/DynamicArray.c.i
-.PHONY : Generic/DynamicArray.i
-
-# target to preprocess a source file
-Generic/DynamicArray.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Generic/DynamicArray.c.i
-.PHONY : Generic/DynamicArray.c.i
-
-Generic/DynamicArray.s: Generic/DynamicArray.c.s
-.PHONY : Generic/DynamicArray.s
-
-# target to generate assembly for a file
-Generic/DynamicArray.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Generic/DynamicArray.c.s
-.PHONY : Generic/DynamicArray.c.s
-
-Generic/LinkedList.obj: Generic/LinkedList.c.obj
-.PHONY : Generic/LinkedList.obj
-
-# target to build an object file
-Generic/LinkedList.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Generic/LinkedList.c.obj
-.PHONY : Generic/LinkedList.c.obj
-
-Generic/LinkedList.i: Generic/LinkedList.c.i
-.PHONY : Generic/LinkedList.i
-
-# target to preprocess a source file
-Generic/LinkedList.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Generic/LinkedList.c.i
-.PHONY : Generic/LinkedList.c.i
-
-Generic/LinkedList.s: Generic/LinkedList.c.s
-.PHONY : Generic/LinkedList.s
-
-# target to generate assembly for a file
-Generic/LinkedList.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Generic/LinkedList.c.s
-.PHONY : Generic/LinkedList.c.s
-
-Generic/String.obj: Generic/String.c.obj
-.PHONY : Generic/String.obj
-
-# target to build an object file
-Generic/String.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Generic/String.c.obj
-.PHONY : Generic/String.c.obj
-
-Generic/String.i: Generic/String.c.i
-.PHONY : Generic/String.i
-
-# target to preprocess a source file
-Generic/String.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Generic/String.c.i
-.PHONY : Generic/String.c.i
-
-Generic/String.s: Generic/String.c.s
-.PHONY : Generic/String.s
-
-# target to generate assembly for a file
-Generic/String.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Generic/String.c.s
-.PHONY : Generic/String.c.s
-
 Metro/FRoute.obj: Metro/FRoute.c.obj
 .PHONY : Metro/FRoute.obj
 
@@ -272,6 +200,30 @@ Metro/MetroManager.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Metro/MetroManager.c.s
 .PHONY : Metro/MetroManager.c.s
 
+Metro/RouteList.obj: Metro/RouteList.c.obj
+.PHONY : Metro/RouteList.obj
+
+# target to build an object file
+Metro/RouteList.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Metro/RouteList.c.obj
+.PHONY : Metro/RouteList.c.obj
+
+Metro/RouteList.i: Metro/RouteList.c.i
+.PHONY : Metro/RouteList.i
+
+# target to preprocess a source file
+Metro/RouteList.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Metro/RouteList.c.i
+.PHONY : Metro/RouteList.c.i
+
+Metro/RouteList.s: Metro/RouteList.c.s
+.PHONY : Metro/RouteList.s
+
+# target to generate assembly for a file
+Metro/RouteList.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Metro/RouteList.c.s
+.PHONY : Metro/RouteList.c.s
+
 Metro/Station.obj: Metro/Station.c.obj
 .PHONY : Metro/Station.obj
 
@@ -295,6 +247,30 @@ Metro/Station.s: Metro/Station.c.s
 Metro/Station.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Metro/Station.c.s
 .PHONY : Metro/Station.c.s
+
+Metro/StationList.obj: Metro/StationList.c.obj
+.PHONY : Metro/StationList.obj
+
+# target to build an object file
+Metro/StationList.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Metro/StationList.c.obj
+.PHONY : Metro/StationList.c.obj
+
+Metro/StationList.i: Metro/StationList.c.i
+.PHONY : Metro/StationList.i
+
+# target to preprocess a source file
+Metro/StationList.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Metro/StationList.c.i
+.PHONY : Metro/StationList.c.i
+
+Metro/StationList.s: Metro/StationList.c.s
+.PHONY : Metro/StationList.s
+
+# target to generate assembly for a file
+Metro/StationList.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TrabalhoPratico.dir\build.make CMakeFiles/TrabalhoPratico.dir/Metro/StationList.c.s
+.PHONY : Metro/StationList.c.s
 
 main.obj: main.c.obj
 .PHONY : main.obj
@@ -332,24 +308,21 @@ help:
 	@echo ... AppManager.obj
 	@echo ... AppManager.i
 	@echo ... AppManager.s
-	@echo ... Generic/DynamicArray.obj
-	@echo ... Generic/DynamicArray.i
-	@echo ... Generic/DynamicArray.s
-	@echo ... Generic/LinkedList.obj
-	@echo ... Generic/LinkedList.i
-	@echo ... Generic/LinkedList.s
-	@echo ... Generic/String.obj
-	@echo ... Generic/String.i
-	@echo ... Generic/String.s
 	@echo ... Metro/FRoute.obj
 	@echo ... Metro/FRoute.i
 	@echo ... Metro/FRoute.s
 	@echo ... Metro/MetroManager.obj
 	@echo ... Metro/MetroManager.i
 	@echo ... Metro/MetroManager.s
+	@echo ... Metro/RouteList.obj
+	@echo ... Metro/RouteList.i
+	@echo ... Metro/RouteList.s
 	@echo ... Metro/Station.obj
 	@echo ... Metro/Station.i
 	@echo ... Metro/Station.s
+	@echo ... Metro/StationList.obj
+	@echo ... Metro/StationList.i
+	@echo ... Metro/StationList.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
