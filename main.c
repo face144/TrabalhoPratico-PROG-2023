@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <stdio.h>
 
 #include "AppManager.h"
@@ -11,7 +10,7 @@ int main()
     if (Init(&App) == 1)
     {
         Loop(&App);
-        return 0;
     }
+
     return 1;
 }

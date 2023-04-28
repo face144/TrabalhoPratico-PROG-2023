@@ -15,10 +15,12 @@ typedef struct FMetroManager
 } FMetroManager;
 
 FMetroManager FMetroManagerCreate();
+void FMetroManagerDestroy(FMetroManager* self);
 
 // Visuals
 void PrintStations(FMetroManager* self);
 void PrintRoutes(FMetroManager* self);
+void PrintMetro(FMetroManager* self);
 
 // Routes
 int AddRoute(FMetroManager* self, FRoute* NewRoute);
@@ -27,6 +29,8 @@ int UpdateRoutes(FMetroManager* self);
 int AddStationToRoute(FMetroManager* self, char* StationCode, char* RouteName);
 int AddStationToRouteByReference(FStation* Station, FRoute* Route);
 int RemoveStationFromRoute(FMetroManager* self, char* StationCode, char* RouteName);
+int AddRouteFromTextFile(FMetroManager* self, const char* Filename);
+FRoute* FindRoute(FMetroManager* self, const char* RouteName);
 
 // Stations
 FStation* AddStation(FMetroManager* self, char* StationName);

@@ -10,9 +10,19 @@ FMetroManager FMetroManagerCreate() {
     return result;
 }
 
+void FMetroManagerDestroy(FMetroManager* self)
+{
+    TDynamicArrayDestroy(&self->StationList);
+    TLinkedListDestroy(&self->RouteList);
+}
 
 void PrintStations(FMetroManager* self)
 {
+    if (self->StationList.Length == 0)
+    {
+        printf("Nao existem estacoes\n");
+    }
+
     printf("\n");
     for (int i = 0; i < self->StationList.Length; ++i)
     {
@@ -30,6 +40,11 @@ void PrintStations(FMetroManager* self)
 
 void PrintRoutes(FMetroManager *self)
 {
+    if (self->RouteList.Length == 0)
+    {
+        printf("Nao existem rotas\n");
+    }
+
     printf("\n");
     for (int i = 0; i < self->RouteList.Length; ++i)
     {
@@ -50,9 +65,54 @@ void PrintRoutes(FMetroManager *self)
     printf("\n");
 }
 
+void PrintMetro(FMetroManager *self)
+{
+    if (self->RouteList.Length == 0)
+    {
+        printf("Nao existem rotas\n");
+    }
+    else
+    {
+        printf("*** ROTAS ***");
+        PrintRoutes(self);
+    }
+
+    printf("\n");
+
+    if (self->StationList.Length == 0)
+    {
+        printf("Nao existem estacoes\n");
+    }
+    else
+    {
+        printf("\n");
+        printf("*** ESTACOES SEM ROTAS ASSOCIADAS ***\n");
+
+        for (int i = 0; i < self->StationList.Length; ++i)
+        {
+            FStation* Current = &self->StationList.Array[i];
+
+            if (strcmp(Current->RouteName, "N/A") == 0)
+            {
+                printf("------------------\n");
+                printf("Nome: %s\n", Current->StationName);
+                printf("Codigo: %s\n", Current->StationCode);
+                printf("------------------\n");
+            }
+        }
+
+        printf("\n");
+    }
+}
+
 int AddRoute(FMetroManager* self, FRoute* NewRoute)
 {
     char* NewRouteName = NewRoute->RouteName;
+    if (strlen(NewRouteName) < 3)
+    {
+        return 0;
+    }
+
     for (int i = 0; i < self->RouteList.Length; ++i)
     {
         char* CurrentRouteName = TLinkedListGet(&self->RouteList, i)->RouteName;
@@ -107,9 +167,17 @@ FStation* AddStation(FMetroManager *self, char* StationName)
 {
     FStation New;
 
-    if (self == NULL)
+    if (self == NULL || strlen(StationName) < 3)
     {
         return NULL;
+    }
+
+    for (int i = 0; i < self->StationList.Length; ++i)
+    {
+        if (strcmp(self->StationList.Array[i].StationName, StationName) == 0)
+        {
+            return NULL;
+        }
     }
 
     char Code[STATION_CODE_LENGTH + 1];
@@ -239,6 +307,89 @@ int RemoveStationFromRoute(FMetroManager *self, char *StationCode, char *RouteNa
     }
 
     return 0;
+}
+
+int AddRouteFromTextFile(FMetroManager* self, const char *Filename)
+{
+    if (self == NULL || Filename == NULL)
+    {
+        return 0;
+    }
+
+    FILE* File = fopen(Filename, "r");
+    if (File == NULL)
+    {
+        return 0;
+    }
+
+    FRoute NewRoute = FRouteCreate();
+    char Line[FILE_LINE_MAX_CHAR];
+
+    fgets(Line, sizeof(Line), File);
+    Line[strlen(Line) - 1] = '\0';
+    strcpy(NewRoute.RouteName, Line);
+
+    // Verificar se a rota ja existe
+    if (FindRoute(self, NewRoute.RouteName) != NULL)
+    {
+        fclose(File);
+        return 0;
+    }
+
+    for (int i = 0; fgets(Line, sizeof(Line), File) != NULL; ++i)
+    {
+        char* StationName = strtok(Line, "#");
+        if (StationName[strlen(StationName) - 1] == '\n' ||
+            StationName[strlen(StationName) - 1] == ' ')
+        {
+            StationName[strlen(StationName) - 1] = '\0';
+        }
+
+        // Cleanup the string
+        char* StationCode = strtok(NULL, " ");
+        if (StationCode[strlen(StationCode) - 1] == '\n' ||
+            StationCode[strlen(StationCode) - 1] == ' ')
+        {
+            StationCode[strlen(StationCode) - 1] = '\0';
+        }
+
+        // Verifica se a estacao existe
+        FStation* Station = FindStation(self, StationCode);
+        if (Station == NULL)
+        {
+            // Estacao nao existe
+            fclose(File);
+            return 0;
+        }
+
+        NewRoute.StationList[NewRoute.StationLength] = Station;
+        NewRoute.StationLength++;
+    }
+
+    fclose(File);
+
+    AddRoute(self, &NewRoute);
+    for (int i = 0; i < NewRoute.StationLength; ++i)
+    {
+        FStation* Current = NewRoute.StationList[i];
+        strcpy(Current->RouteName, NewRoute.RouteName);
+    }
+
+    return 1;
+}
+
+FRoute* FindRoute(FMetroManager* self, const char* RouteName)
+{
+    for (int i = 0; i < self->RouteList.Length; ++i)
+    {
+        FRoute* Current = TLinkedListGet(&self->RouteList, i);
+        if (strcmp(Current->RouteName, RouteName) == 0)
+        {
+            return Current;
+        }
+    }
+
+    return NULL;
 }
 
 int GenerateValidStationCode(FMetroManager *self, char* OutCode)

@@ -36,16 +36,24 @@ void Menu(FAppManager* App)
 {
     printf("--- Menu ---\n");
 
-    printf("1 - Visualizar Estacoes\n");
-    printf("2 - Adicionar Estacoes\n");
-    printf("3 - Remover Estacao\n");
+    printf("1 - Visualizar Metro\n");
 
-    printf("4 - Visualizar Rotas\n");
-    printf("5 - Adicionar Rotas\n");
-    printf("6 - Editar Rota\n");
-    printf("7 - Importar Rota\n");
+    printf("\n");
 
-    printf("8 - Sair\n");
+    printf("2 - Visualizar Estacoes\n");
+    printf("3 - Adicionar Estacoes\n");
+    printf("4 - Remover Estacao\n");
+
+    printf("\n");
+
+    printf("5 - Visualizar Rotas\n");
+    printf("6 - Adicionar Rotas\n");
+    printf("7 - Editar Rota\n");
+    printf("8 - Importar Rota\n");
+
+    printf("\n");
+
+    printf("9 - Sair\n");
 
 
     int OptionNum = 0;
@@ -56,7 +64,7 @@ void Menu(FAppManager* App)
         scanf("%s", Option);
         OptionNum = atoi(Option);
 
-        if (OptionNum >= 1 && OptionNum <= 8)
+        if (OptionNum >= 1 && OptionNum <= 9)
             break;
 
         printf("Opcao invalida\n");
@@ -65,35 +73,40 @@ void Menu(FAppManager* App)
     switch (OptionNum) {
 
         case 1:
-            PrintStations(&App->MetroManager);
+            PrintMetro(&App->MetroManager);
             break;
 
         case 2:
-            AddStationMenu(App);
+            PrintStations(&App->MetroManager);
             break;
 
         case 3:
-            RemoveStationMenu(App);
+            AddStationMenu(App);
             break;
 
         case 4:
-            PrintRoutes(&App->MetroManager);
+            RemoveStationMenu(App);
             break;
 
         case 5:
-            AddRouteMenu(App);
+            PrintRoutes(&App->MetroManager);
             break;
 
         case 6:
-            EditRouteMenu(App);
+            AddRouteMenu(App);
             break;
 
         case 7:
-            ImportRouteMenu(App);
+            EditRouteMenu(App);
             break;
 
         case 8:
+            ImportRouteMenu(App);
+            break;
+
+        case 9:
             SaveData(App);
+            FMetroManagerDestroy(&App->MetroManager);
             exit(0);
 
         default:
@@ -101,6 +114,7 @@ void Menu(FAppManager* App)
 
     }
 
+    system("pause");
     printf("\n");
 }
 
@@ -121,14 +135,15 @@ int AddStationMenu(FAppManager* App)
     gets(Nome);
 
     FStation* Temp = AddStation(&App->MetroManager, Nome);
-    if (Temp != NULL)
+    if (Temp == NULL)
     {
-        printf("AVISO: Estacao adicionada com o codigo %s.\n", Temp->StationCode);
-        return 1;
+        printf("AVISO: Nao foi possivel adicionar estacao.\n");
+        printf("Por favor verifique se o nome esta repetido ou se tem mais de 3 caracteres\n");
+        return 0;
     }
 
-    printf("AVISO: Nao foi possivel adicionar estacao. Por favor verifique se o nome esta repetido.\n");
-    return 0;
+    printf("AVISO: Estacao adicionada com o codigo %s.\n", Temp->StationCode);
+    return 1;
 }
 
 int RemoveStationMenu(FAppManager *App)
@@ -163,6 +178,7 @@ int AddRouteMenu(FAppManager *App)
     if (AddRoute(&App->MetroManager, &New) == 0)
     {
         printf("AVISO: Erro ao adicionar rota\n");
+        printf("Por favor verifique se a estacao tem o nome repetido ou se tem mais de 3 caracteres\n");
         return 0;
     }
 
@@ -275,19 +291,13 @@ int ImportRouteMenu(FAppManager *App)
     gets(Filename);
     printf("\n");
 
-    FRoute New = FRouteCreate();
-    if (GetRouteFromTextFile(&New, Filename) == 0)
+    if (AddRouteFromTextFile(&App->MetroManager, Filename) == 0)
     {
-        printf("Erro ao importar rota do ficheiro\n");
+        printf("AVISO: Erro ao importar rota do ficheiro\n");
+        printf("Por favor verifique se o nome do ficheiro esta correto\n");
+        printf("Por favor verifique tambem se o nome da rota esta repetido e se as estacoes existem no sistema\n");
         return 0;
     }
-
-    if (AddRoute(&App->MetroManager, &New))
-    {
-        printf("Erro ao adicionar rota\n");
-        return 0;
-    }
-
 
     printf("Rota adicionada\n");
     return 1;

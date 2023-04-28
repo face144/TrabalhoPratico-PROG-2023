@@ -19,6 +19,4 @@ FRoute FRouteCreate();
 int AddStationReference(FRoute* self, FStation* NewStation);
 int UpdateStationReferences(FRoute* self);
 
-int GetRouteFromTextFile(FRoute* self, const char* Filename);
-
 #endif //TRABALHOPRATICO_FROUTE_H
